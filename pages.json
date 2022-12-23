@@ -1,17 +1,72 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		}
-	],
+            "path" : "pages/home/home",
+            "style" :                                                                                    
+            {
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/project/project",
+            "style" :                                                                                    
+            {
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/navigator/navigator"  
+        }
+        ,{
+            "path" : "pages/my/my",
+            "style" :                                                                                    
+            {
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "玩安卓",
+		"navigationBarBackgroundColor": "#007aff",
+		"backgroundColor": "#007aff"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+	"tabBar": {
+		"selectedColor": "#007aff",
+		"color": "#8A8A8A",
+		"list": [
+			{
+				"pagePath": "pages/home/home",
+				"text": "首页",
+				"iconPath": "/static/tabs/home.png",
+				"selectedIconPath": "/static/tabs/home_select.png"
+				
+			},
+			{
+				"pagePath": "pages/navigator/navigator",
+				"text": "导航",
+				"iconPath": "/static/tabs/navigator.png",
+				"selectedIconPath": "/static/tabs/navigator_select.png"
+				
+			},
+			{
+				"pagePath": "pages/project/project",
+				"text": "项目",
+				"iconPath": "/static/tabs/project.png",
+				"selectedIconPath": "/static/tabs/project_select.png"
+				
+			},
+			{
+				"pagePath": "pages/my/my",
+				"text": "我的",
+				"iconPath": "/static/tabs/my.png",
+				"selectedIconPath": "/static/tabs/my_select.png"
+				
+			}
+		]
+	}
 }
