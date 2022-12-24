@@ -4,7 +4,8 @@
             "path" : "pages/home/home",
             "style" :                                                                                    
             {
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": true,
+				"onReachBottomDistance": 150
             }
             
         }

@@ -47,7 +47,9 @@
 				//文章列表
 				articleList: [],
 				//请求页码,从0开始。
-				page: 0
+				page: 0,
+				//节流阀
+				isLoading :false
 			};
 		},
 		mounted() {
@@ -56,16 +58,32 @@
 
 			this.getAritcleList()
 		},
-		//计算属性
-		computed:{
+		//下拉刷新
+		onPullDownRefresh() {
 			
+			this.page = 0
 			
+			this.articleList = []
+			
+			this.getAritcleList(() => 
+				//停止刷新
+				uni.stopPullDownRefresh()
+			)
+		},
+		//上拉加载更多
+		onReachBottom() {
+			
+			if(this.isLoading) return
+			
+			this.page++;
+			
+			this.getAritcleList()
 		},
 		methods: {
 
 			//获取轮播图的数据
 			async getBannerList() {
-
+				
 				const {data: data} = await uni.$http.get('/banner/json')
 
 				if (data.errorCode !== 0) return uni.$showMsg()
@@ -74,15 +92,20 @@
 			},
 
 			//获取文章列表
-			async getAritcleList() {
-
+			async getAritcleList(callback) {
+				//打开节流阀
+				this.isLoading = true
+				
 				const {data: data} = await uni.$http.get('/article/list/' + this.page + '/json')
 
-				console.log(data)
+				//关闭节流阀
+				this.isLoading = false
+				
+				callback&&callback()
 
 				if (data.errorCode !== 0) return uni.$showMsg()
-
-				this.articleList = data.data.datas
+				//合并数据
+				this.articleList = [...this.articleList,...data.data.datas]
 			},
 			//拼接作者和日期
 			getAuthorDate(item){
@@ -110,6 +133,7 @@
 		}
 	}
 .article-container {
+	
 	background-color: $uni-bg-color-grey;
 	
 	.article-item {
@@ -134,7 +158,7 @@
 					margin-right: 5px;
 				}
 				.article-title {
-					font-size: 13px;
+					font-size: 14px;
 					color: $uni-text-color;
 				}
 			}
