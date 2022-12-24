@@ -13,7 +13,7 @@
 		<view class="article-container">
 			<block v-for="(article,i) in articleList" :key="i">
 				<!-- 文章item -->
-				<view class="article-item">
+				<view class="article-item" @click="onItemClick(article)">
 					<!-- 文章左边信息 -->
 					<view class="article-info">
 						<!-- 文章标题上半部分 -->
@@ -113,6 +113,12 @@
 				let date = item.niceDate || item.niceShareDate
 				
 				return author + "   "+date
+			},
+			
+			onItemClick(item){
+				uni.navigateTo({
+					url:'/subpackages/article_detail/article_detail'
+				})
 			}
 		}
 	}

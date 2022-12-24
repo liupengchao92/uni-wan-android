@@ -29,6 +29,16 @@
             
         }
     ],
+	"subPackages": [
+		{
+			"root": "subpackages",
+			"pages": [
+				{
+					"path": "article_detail/article_detail"
+				}
+			]
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "玩安卓",
