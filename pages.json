@@ -5,7 +5,8 @@
             "style" :                                                                                    
             {
                 "enablePullDownRefresh": true,
-				"onReachBottomDistance": 150
+				"onReachBottomDistance": 150,
+				"backgroundTextStyle": "light"
             }
             
         }

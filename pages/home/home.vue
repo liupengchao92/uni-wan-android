@@ -26,6 +26,12 @@
 							<view class="top" v-if="article.type!==0">置顶</view>
 							<view class="author-date">{{getAuthorDate(article)}}</view>
 						</view>
+						<!-- 标签 -->
+						<view class="tags-container" v-if="article.tags.length !==0">
+							<view class="tag-item" v-for="(tag,i2) in article.tags" :key="i2">
+								{{tag.name}}
+							</view>
+						</view>
 					</view>
 					<!-- 收藏按钮 -->
 					<view class="favorite">
@@ -170,7 +176,7 @@
 			}
 			
 			.article-info-bottom {
-				margin-top: 10px;
+				margin-top: 5px;
 				display: flex;
 				align-items: center;
 				.top {
@@ -181,8 +187,21 @@
 					margin-right: 5px;
 				}
 				.author-date {
-					font-size: 11px;
+					font-size: 12px;
 					color: $uni-color-subtitle;
+				}
+			}
+			
+			.tags-container {
+				display: flex;
+				margin-top: 5px;
+				
+				.tag-item {
+					margin-right: 5px;
+					font-size: 11px;
+					padding: 0 2px;
+					color: $uni-color-primary;
+					border: 1px solid $uni-color-primary;
 				}
 			}
 		}
