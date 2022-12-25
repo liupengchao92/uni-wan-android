@@ -2,7 +2,7 @@
 	<view>
 		<!-- 轮播图区域 -->
 		<swiper indicator-dots="true" autoplay="true" aucircular="true">
-			<swiper-item v-for="(item,i) in bannerList" :key="i">
+			<swiper-item v-for="(item,i) in bannerList" :key="i" @click="onSiwperItemClick(item)">
 				<view class="banner-item">
 					<image class="img" :src="item.imagePath"></image>
 				</view>
@@ -35,7 +35,7 @@
 					</view>
 					<!-- 收藏按钮 -->
 					<view class="favorite">
-						<uni-icons type="heart" size="24"></uni-icons>
+						<uni-icons type="heart" size="22" @click="favoriteHandler(article)"></uni-icons>
 					</view>
 				</view>
 			</block>
@@ -61,6 +61,8 @@
 		mounted() {
 
 			this.getBannerList()
+			
+			this.getTopArticleList()
 
 			this.getAritcleList()
 		},
@@ -70,6 +72,8 @@
 			this.page = 0
 			
 			this.articleList = []
+			
+			this.getTopArticleList()
 			
 			this.getAritcleList(() => 
 				//停止刷新
@@ -109,21 +113,48 @@
 				
 				callback&&callback()
 
-				if (data.errorCode !== 0) return uni.$showMsg()
+				if (data.errorCode !== 0) return uni.$showMsg(data.errorMsg)
 				//合并数据
 				this.articleList = [...this.articleList,...data.data.datas]
 			},
+			
+			//获取置顶文章
+			async getTopArticleList(){
+				
+				const {data:data} = await uni.$http.get('/article/top/json')
+				
+				if(data.errorCode !==0) return uni.$showMsg(data.errorMsg)
+				
+				this.articleList = [...data.data,...this.articleList]
+			},
+			
 			//拼接作者和日期
 			getAuthorDate(item){
 				let author = item.author || item.shareUser 
 				let date = item.niceDate || item.niceShareDate
-				
 				return author + "   "+date
 			},
 			
+			//点击文章跳转
 			onItemClick(item){
 				uni.navigateTo({
-					url:'/subpackages/article_detail/article_detail'
+					url:'/subpackages/article_detail/article_detail?url='+item.link
+				})
+			},
+			
+			//轮播图的点击事件
+			onSiwperItemClick(item){
+				uni.navigateTo({
+					url:'/subpackages/article_detail/article_detail?url='+item.url
+				})
+				
+			},
+			
+			//收藏文章
+			favoriteHandler(item){
+				uni.showToast({
+					title:'收藏文章',
+					icon:'success'
 				})
 			}
 		}
@@ -182,8 +213,8 @@
 				.top {
 					padding: 0 2px;
 					font-size: 11px;
-					border: 1px solid $uni-color-primary;
-					color: $uni-color-primary;
+					border: 1px solid #09bb07;
+					color: #09bb07;
 					margin-right: 5px;
 				}
 				.author-date {
