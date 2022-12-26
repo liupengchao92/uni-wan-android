@@ -14,7 +14,8 @@
             "path" : "pages/project/project",
             "style" :                                                                                    
             {
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"onReachBottomDistance": 50
             }
             
         }

@@ -35,7 +35,7 @@
 					</view>
 					<!-- 收藏按钮 -->
 					<view class="favorite" @click.stop="favoriteHandler(article)">
-						<uni-icons type="heart" size="22"></uni-icons>
+						<uni-icons type="heart" size="20"></uni-icons>
 					</view>
 				</view>
 			</block>
