@@ -9,7 +9,7 @@
 		<!-- 右边导航 -->
 		<view class="navi-right" >
 			<block v-for="(item2,i2) in naviChildrenList" :key="i2">
-				<view class="navi-right-item" >{{item2.title}}</view>
+				<view class="navi-right-item" @click="goToArticleDetailHandler(item2)">{{item2.title}}</view>
 			</block>	
 		</view>
 	</view>
@@ -58,6 +58,13 @@
 				this.selectPosition = position
 				//重新赋值数据
 				this.naviChildrenList = this.naviList[position].articles
+			},
+			
+			//跳转到详情页面
+			goToArticleDetailHandler(item){
+				uni.navigateTo({
+					url:'/subpackages/article_detail/article_detail?url=' + item.link
+				})
 			}
 		}	
 	}
@@ -71,7 +78,7 @@
 		background-color: $uni-bg-color-grey;
 		.navi-left-item {
 			text-align: center;
-			height: 45px;
+			height: 40px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
