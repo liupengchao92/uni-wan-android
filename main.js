@@ -29,7 +29,17 @@ uni.$http = $http
 $http.baseUrl = 'https://www.wanandroid.com'
 
 // 请求开始之前做一些事情
-$http.beforeRequest = function (otions){
+$http.beforeRequest = function (options){
+	
+	
+	//处理登录的cookies请求
+    const cookies =	uni.getStorageSync('cookies')||''
+	if(cookies!==''){
+		options.header = {
+			cookie: cookies
+		}
+	}
+
 	//显示加载框
 	uni.showLoading({
 		title:'数据加载中...'

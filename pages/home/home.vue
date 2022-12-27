@@ -34,8 +34,9 @@
 						</view>
 					</view>
 					<!-- 收藏按钮 -->
-					<view class="favorite" @click.stop="favoriteHandler(article)">
-						<uni-icons type="heart" size="20"></uni-icons>
+					<view class="favorite" @click.stop="favoriteHandler(article,i)">
+						<uni-icons type="heart-filled" color="#007aff" size="20" v-if="article.collect"></uni-icons>
+						<uni-icons type="heart" size="20" v-else></uni-icons>
 					</view>
 				</view>
 			</block>
@@ -146,16 +147,28 @@
 			onSiwperItemClick(item){
 				uni.navigateTo({
 					url:'/subpackages/article_detail/article_detail?url='+item.url
-				})
-				
+				})	
 			},
 			
 			//收藏文章
-			favoriteHandler(item){
-				uni.showToast({
-					title:'收藏文章',
-					icon:'success'
-				})
+			async favoriteHandler(item,position){
+				//判断收藏状态
+				if(item.collect){	
+					//取消收藏
+					const {data:data} = await uni.$http.post('/lg/uncollect_originId/'+item.id+'/json')
+					
+					item.collect = false
+					
+					uni.showToast({title:'取消成功',duration:1500,icon:'success'})		
+					
+				}else{
+					//收藏
+					const {data:data} = await uni.$http.post('/lg/collect/'+item.id+'/json')
+							
+					item.collect = true
+					
+					uni.showToast({title:'收藏成功',duration:1500,icon:'success'})		
+				}		
 			}
 		}
 	}

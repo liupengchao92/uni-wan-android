@@ -37,6 +37,9 @@
 			"pages": [
 				{
 					"path": "article_detail/article_detail"
+				},
+				{
+					"path": "login/login"
 				}
 			]
 		}
