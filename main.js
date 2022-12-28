@@ -1,11 +1,16 @@
 import App from './App'
 
+//导入store对象
+import store from 'store/store.js'
+
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
-    ...App
+    ...App,
+	//将Store挂载到Vue对象上
+	store,
 })
 app.$mount()
 // #endif
@@ -30,8 +35,6 @@ $http.baseUrl = 'https://www.wanandroid.com'
 
 // 请求开始之前做一些事情
 $http.beforeRequest = function (options){
-	
-	
 	//处理登录的cookies请求
     const cookies =	uni.getStorageSync('cookies')||''
 	if(cookies!==''){
@@ -47,7 +50,7 @@ $http.beforeRequest = function (options){
 }
 
 // 请求完成之后做一些事情
-$http.afterRequest = function (){
+$http.afterRequest = function (res){
 	//隐藏加载框
 	uni.hideLoading()
 }

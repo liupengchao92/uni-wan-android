@@ -23,8 +23,8 @@
 						</view>
 						<view class="project-date-fav">
 							<view class="project-date">{{project.niceDate}}</view>
-							<uni-icons type="heart" size="20"></uni-icons>
-						</view>	
+<!-- 							<uni-icons type="heart" size="20"></uni-icons>
+ -->						</view>	
 					</view>
 				</view>
 			</block>

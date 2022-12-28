@@ -15,6 +15,9 @@
 </template>
 
 <script>
+	
+	import {mapMutations} from 'vuex'
+	
 	export default {
 		data() {
 			return {
@@ -31,7 +34,8 @@
 			
 		},
 		methods:{
-			
+			//导入mutations中的方法
+			...mapMutations('m_user',['updateCookies', 'updateUserInfo']),
 			//输入用户名
 			inputUsername(event){
 				//清除倒计时
@@ -83,9 +87,14 @@
 				if(res.data.errorCode !==0) return uni.$showMsg(res.data.errorMsg)
 				
 				//保存cookies
-				uni.setStorageSync('cookies',JSON.stringify(res.cookies))
+				this.updateCookies(res.cookies)
+				
+				this.updateUserInfo(res.data.data)
 				
 				uni.$showMsg('登录成功！')
+				
+				//返回之前的页面
+				uni.navigateBack()
 			}
 		
 		}

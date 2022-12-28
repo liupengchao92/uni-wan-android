@@ -165,6 +165,18 @@
 					//收藏
 					const {data:data} = await uni.$http.post('/lg/collect/'+item.id+'/json')
 							
+					if(data.errorCode !==0){
+						
+						if(data.errorCode===-1001){
+							//需要重新登录
+							uni.navigateTo({
+								url:'/subpackages/login/login'
+							})
+						}
+						
+						return uni.$showMsg(data.errorMsg)
+					}
+							
 					item.collect = true
 					
 					uni.showToast({title:'收藏成功',duration:1500,icon:'success'})		
