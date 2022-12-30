@@ -9,7 +9,7 @@
 		<!-- 右边导航 -->
 		<view class="navi-right" >
 			<block v-for="(item2,i2) in naviChildrenList" :key="i2">
-				<view class="navi-right-item" @click="goToArticleDetailHandler(item2)">{{item2.title}}</view>
+				<view class="navi-right-item" :style="{'background-color':item2.color}"  @click="goToArticleDetailHandler(item2)">{{item2.title}}</view>
 			</block>	
 		</view>
 	</view>
@@ -49,7 +49,7 @@
 				//一级导航数据
 				this.naviList = data.data
 				//二级导航数据
-				this.naviChildrenList = this.naviList[0].articles
+				this.naviChildrenList = this.getNaviChildrenList(0)
 			},
 			
 			//选中的位置发生改变
@@ -57,7 +57,7 @@
 				
 				this.selectPosition = position
 				//重新赋值数据
-				this.naviChildrenList = this.naviList[position].articles
+				this.naviChildrenList = this.getNaviChildrenList(position)
 			},
 			
 			//跳转到详情页面
@@ -65,7 +65,29 @@
 				uni.navigateTo({
 					url:'/subpackages/article_detail/article_detail?url=' + item.link
 				})
-			}
+			},
+			
+			//获取二级目录数据
+			getNaviChildrenList(position){
+				
+				const articles = this.naviList[position].articles
+				
+				articles.forEach(item =>{
+					item.color = this.getRandomColor()
+				})	
+				return articles
+			},
+			
+			//获取随机颜色值
+			getRandomColor() {
+			   const rgb = []
+			       for (let i = 0; i < 3; ++i) {
+			           let color = Math.floor(Math.random() * 256).toString(16)
+			           color = color.length == 1 ? '0' + color : color
+			           rgb.push(color)
+			       }
+			       return '#' + rgb.join('')
+			   }        
 		}	
 	}
 </script>
@@ -101,17 +123,16 @@
 		flex-wrap: wrap;
 		align-items: flex-start;
 		justify-content: space-around;
-		align-content: flex-start;
+		align-content: center;
 		
 		.navi-right-item {
-			padding: 3px 6px;
+			padding: 3px 8px;
 			font-size: 12px;
 			text-align: center;
 			margin: 10px 5px;
-			background-color: $uni-bg-color-grey;
 			border-radius: 15px;
-			border: 1px solid #007aff;
-			color: #007aff;
+			//border: 1px solid #007aff;
+			color: white;
 		}
 	}
 }	

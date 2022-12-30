@@ -40,6 +40,22 @@
 				},
 				{
 					"path": "login/login"
+				},
+				{
+					"path": "search/search"
+				},
+				{
+					"path": "my_favorite/my_favorite"
+				},
+				{
+					"path": "my_coin/my_coin"
+				},
+				{
+					"path": "my_share/my_share"
+				},
+				
+				{
+					"path": "my_setting/my_setting"
 				}
 			]
 		}

@@ -38,7 +38,7 @@ export default {
 		updateUserInfo(state,info){
 			
 			state.userinfo = info
-						
+									
 			this.commit('m_user/saveUserInfo')
 		},
 		

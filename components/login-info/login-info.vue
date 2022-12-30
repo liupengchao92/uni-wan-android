@@ -8,7 +8,7 @@
 		</view>
 		<!-- 其它信息 -->
 		<view class="other-info">
-			<view class="info-item">
+			<view class="info-item" @click="goToFavorite">
 				<view class="item-left">
 					<image class="icon" src="../../static/my/my_favorite.png" ></image>
 					<text class="title">我的收藏</text>
@@ -17,7 +17,7 @@
 					<uni-icons type="right" size="18"></uni-icons>
 				</view>
 			</view>
-			<view class="info-item">
+			<view class="info-item" @click="goToCoin">
 				<view class="item-left">
 					<image class="icon" src="../../static/my/my_coin.png" ></image>
 					<text class="title">积分排行</text>
@@ -26,7 +26,7 @@
 					<uni-icons type="right" size="18"></uni-icons>
 				</view>
 			</view>
-			<view class="info-item">
+			<view class="info-item" @click="goToShare">
 				<view class="item-left">
 					<image class="icon" src="../../static/my/my_share.png" ></image>
 					<text class="title">我的分享</text>
@@ -35,7 +35,7 @@
 					<uni-icons type="right" size="18"></uni-icons>
 				</view>
 			</view>
-			<view class="info-item">
+			<view class="info-item" @click="goToSetting">
 				<view class="item-left">
 					<image class="icon" src="../../static/my/my_setting.png" ></image>
 					<text class="title">设置</text>
@@ -60,15 +60,62 @@
 			};
 		},
 		
+		mounted() {
+			console.log('mounted')
+			//获取用户信息
+			this.getUserInfo()
+		},
+		
+		//这个方法不执行
 		onLoad() {
-			
+			console.log('onLoad')
+			//获取用户信息
+			this.getUserInfo()
 		},
 		computed:{
 			//导入userStore中的数据
 			...mapState('m_user',['userinfo']),
 		},
 		methods:{
-			...mapMutations('m_user',['updateUserInfo'])
+			...mapMutations('m_user',['updateUserInfo']),
+			
+			async getUserInfo(){
+				
+				const {data:data} = await uni.$http.get('/user/lg/userinfo/json')
+				
+				if(data.errorCode !==0) return uni.$showMsg(data.errorMsg)
+				
+				this.updateUserInfo(data.data.userInfo)
+			
+			},
+			
+			//跳转到收藏
+			goToFavorite(){
+				uni.navigateTo({
+					url:'/subpackages/my_favorite/my_favorite'
+				})
+			},
+			//跳转到积分排行
+			goToCoin(){
+				uni.navigateTo({
+					url:'/subpackages/my_coin/my_coin'
+				})
+			},
+			
+			//跳转到分享
+			goToShare(){
+				uni.navigateTo({
+					url:'/subpackages/my_share/my_share'
+				})
+			},
+			
+			goToSetting(){
+				console.log('========>>')
+				uni.navigateTo({
+					url:'/subpackages/my_setting/my_setting'
+				})
+			}
+			
 		},
 		
 	}

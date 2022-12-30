@@ -1,5 +1,9 @@
 <template>
 	<view>
+		
+		<!-- 搜索组件 -->
+		<my-search @click = "searchHandler"></my-search>
+		
 		<!-- 轮播图区域 -->
 		<swiper indicator-dots="true" autoplay="true" aucircular="true">
 			<swiper-item v-for="(item,i) in bannerList" :key="i" @click="onSiwperItemClick(item)">
@@ -181,6 +185,13 @@
 					
 					uni.showToast({title:'收藏成功',duration:1500,icon:'success'})		
 				}		
+			},
+			
+			//跳转到搜索页面
+			searchHandler(){				
+				uni.navigateTo({
+					url:'/subpackages/search/search'
+				})
 			}
 		}
 	}
