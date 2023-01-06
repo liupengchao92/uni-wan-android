@@ -16,33 +16,7 @@
 		<!-- 文章区域 -->
 		<view class="article-container">
 			<block v-for="(article,i) in articleList" :key="i">
-				<!-- 文章item -->
-				<view class="article-item" @click="onItemClick(article)">
-					<!-- 文章左边信息 -->
-					<view class="article-info">
-						<!-- 文章标题上半部分 -->
-						<view class="article-info-top">
-							<view class="fresh" v-if = "article.fresh">新</view>
-							<view class="article-title">{{article.title}}</view>
-						</view>
-						<!-- 文章下半部分 -->
-						<view class="article-info-bottom">
-							<view class="top" v-if="article.type!==0">置顶</view>
-							<view class="author-date">{{getAuthorDate(article)}}</view>
-						</view>
-						<!-- 标签 -->
-						<view class="tags-container" v-if="article.tags.length !==0">
-							<view class="tag-item" v-for="(tag,i2) in article.tags" :key="i2">
-								{{tag.name}}
-							</view>
-						</view>
-					</view>
-					<!-- 收藏按钮 -->
-					<view class="favorite" @click.stop="favoriteHandler(article,i)">
-						<uni-icons type="heart-filled" color="#007aff" size="20" v-if="article.collect"></uni-icons>
-						<uni-icons type="heart" size="20" v-else></uni-icons>
-					</view>
-				</view>
+				<aritlce-item :article="article" :isShowLike="true" @click-favorite = "favorite"></aritlce-item>
 			</block>
 		</view>
 
@@ -132,21 +106,7 @@
 				
 				this.articleList = [...data.data,...this.articleList]
 			},
-			
-			//拼接作者和日期
-			getAuthorDate(item){
-				let author = item.author || item.shareUser 
-				let date = item.niceDate || item.niceShareDate
-				return author + "   "+date
-			},
-			
-			//点击文章跳转
-			onItemClick(item){
-				uni.navigateTo({
-					url:'/subpackages/article_detail/article_detail?url='+item.link
-				})
-			},
-			
+				
 			//轮播图的点击事件
 			onSiwperItemClick(item){
 				uni.navigateTo({
@@ -154,14 +114,31 @@
 				})	
 			},
 			
+			//跳转到搜索页面
+			searchHandler(){				
+				uni.navigateTo({
+					url:'/subpackages/search/search'
+				})
+			},
+			
+			//收藏
+			favorite(item){
+				console.log(item)
+				this.favoriteHandler(item)
+			},
+			
 			//收藏文章
-			async favoriteHandler(item,position){
+			async favoriteHandler(item){
 				//判断收藏状态
 				if(item.collect){	
 					//取消收藏
 					const {data:data} = await uni.$http.post('/lg/uncollect_originId/'+item.id+'/json')
 					
-					item.collect = false
+					this.articleList.forEach(x =>{
+						if(x.id === item.id){
+							x.collect = false
+						}
+					})
 					
 					uni.showToast({title:'取消成功',duration:1500,icon:'success'})		
 					
@@ -181,18 +158,15 @@
 						return uni.$showMsg(data.errorMsg)
 					}
 							
-					item.collect = true
+					this.articleList.forEach(x =>{
+						if(x.id === item.id){
+							x.collect =  true
+						}
+					})
 					
 					uni.showToast({title:'收藏成功',duration:1500,icon:'success'})		
 				}		
 			},
-			
-			//跳转到搜索页面
-			searchHandler(){				
-				uni.navigateTo({
-					url:'/subpackages/search/search'
-				})
-			}
 		}
 	}
 </script>
@@ -211,68 +185,12 @@
 			border-radius: 10px;
 		}
 	}
-.article-container {
 	
-	background-color: $uni-bg-color-grey;
-	
-	.article-item {
-		background-color: $uni-bg-color;
-		margin: 5px 10px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		border-radius: 5px;
-		padding: 15rpx 20rpx;
+	.article-container {
 		
-		.article-info {
-			
-			.article-info-top {
-				display: flex;
-				align-items:flex-start;
-				.fresh {
-					padding: 0 2px;
-					font-size: 11px;
-					border: 1px solid #c00000;
-					color: #c00000;
-					margin-right: 5px;
-				}
-				.article-title {
-					font-size: 14px;
-					color: $uni-text-color;
-				}
-			}
-			
-			.article-info-bottom {
-				margin-top: 5px;
-				display: flex;
-				align-items: center;
-				.top {
-					padding: 0 2px;
-					font-size: 11px;
-					border: 1px solid #09bb07;
-					color: #09bb07;
-					margin-right: 5px;
-				}
-				.author-date {
-					font-size: 12px;
-					color: $uni-color-subtitle;
-				}
-			}
-			
-			.tags-container {
-				display: flex;
-				margin-top: 5px;
-				
-				.tag-item {
-					margin-right: 5px;
-					font-size: 11px;
-					padding: 0 2px;
-					color: $uni-color-primary;
-					border: 1px solid $uni-color-primary;
-				}
-			}
-		}
+		background-color: $uni-bg-color-grey;
+		
+	
 	}
-}
 	
 </style>
