@@ -1,10 +1,9 @@
 <template>
 	<view>
-		
 		<!-- 搜索区域 -->
 		<view class="search-cotainer">	
 			<view class="search-box">
-				<uni-search-bar  radius="50" placeholder="请输入搜索内容" maxlength="15" cancelButton="none" @input="inputHandler"></uni-search-bar>
+				<uni-search-bar  radius="50" placeholder="请输入搜索内容" v-model="searchModel" maxlength="15" cancelButton="none" @input="inputHandler"></uni-search-bar>
 			</view>
 		</view>
 		<!-- 搜索关键词区域 -->
@@ -20,7 +19,7 @@
 					<!-- 热词内容 -->
 					<block v-for="(item,i) in hotKeyList" :key="i">
 						<view class="hotkey-item">
-							<uni-tag :inverted="true" :text="item.name" type="primary" />
+							<uni-tag :inverted="true" :text="item.name" type="primary" @click="clickTag(item.name)"/>
 						</view>		  
 					</block>
 				</view>
@@ -35,15 +34,15 @@
 				<view class="history-list">
 					<block v-for="(item,i) in historyList" :key="i">
 						<view class="hotkey-item">
-							<uni-tag :text="item" type="default" circle="true" />
+							<uni-tag :text="item" type="default" circle="true"  @click="clickTag(item)"/>
 						</view>		  
 					</block>
 				</view>
 			</view>
-
 		</view>
 		<!-- 搜索结果列表 -->
 		<view class="search-result" v-else>
+			
 			<block v-for="(item,i) in searchResult" :key="i">
 				<aritlce-item :article="item"></aritlce-item>
 			</block>
@@ -63,7 +62,9 @@
 				//搜索历史
 				historyList:[],
 				//延迟器
-				timer:null
+				timer:null,
+				//搜索框绑定的值
+				searchModel:''
 				
 			};
 		},
@@ -100,7 +101,6 @@
 					
 					this.seach(event)
 					
-					this.addHistory(event)
 				},500)
 			},
 			
@@ -109,20 +109,12 @@
 				
 				const{data:data} = await uni.$http.post('/article/query/0/json?k='+ keyword)
 				
+				this.addHistory(keyword)
+				
 				if(data.errorCode !==0) return  uni.$showMsg(data.errorMsg)
 				
 				this.searchResult = data.data.datas
 			},
-			//获取随机颜色值
-			getRandomColor() {
-			   const rgb = []
-			       for (let i = 0; i < 3; ++i) {
-			           let color = Math.floor(Math.random() * 256).toString(16)
-			           color = color.length == 1 ? '0' + color : color
-			           rgb.push(color)
-			       }
-			       return '#' + rgb.join('')
-			   },
 			//添加到历史
 			addHistory(keyword){
 				//转化成Set集合
@@ -136,19 +128,23 @@
 				//持久化存储
 				uni.setStorageSync('search-history',JSON.stringify(this.historyList))
 			},
+			//清空搜索历史
 			clearHandler(){
 				uni.showModal({
 					content:'是否清空搜索历史？',
 					success:function(res){
-						console.log(res)
 						if(res.confirm){
-							console.log('清空=====》》')
 							this.historyList = []
-							
 							uni.removeStorageSync('search-history')
 						}
 					}.bind(this)
 				})
+			},
+			//搜索热词
+			clickTag(keyword){
+				//点击标签搜索
+				//this.seach(keyword)
+				this.searchModel = keyword
 			}
 		}
 	}
@@ -212,6 +208,7 @@
 				font-size: 15px;
 			}
 			.clear {
+				margin-top: 10px;
 				margin-right: 10px;
 				width: 20px;
 				height: 20px;
@@ -232,6 +229,12 @@
 			}	
 		}
 	}
+
 }
+
+.search-result {
+	
+		background-color: $uni-bg-color-grey;
+	}
  
 </style>
