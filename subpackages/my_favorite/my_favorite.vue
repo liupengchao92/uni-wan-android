@@ -78,9 +78,7 @@
 			async deleteHandler(item){
 				//取消收藏
 				const {data:data} = await uni.$http.post('/lg/uncollect_originId/'+item.originId+'/json')
-				
-				console.log(data)
-				
+								
 				if(data.errorCode !==0) return uni.$showMsg(data.errorMsg)
 				
 				//删除元素

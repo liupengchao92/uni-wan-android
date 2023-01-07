@@ -46,7 +46,22 @@ export default {
 		saveUserInfo(state){
 			
 			uni.setStorageSync('userinfo',JSON.stringify(state.userinfo))
+		},
+		
+		//清除用户信息
+		clearLoginInfo(state){
+			state.cookies = ''
+			state.userinfo = null
+			
+			this.commit('m_user/clearStorage')
+		},
+		
+		//清除本地信息
+		clearStorage(){
+			uni.removeStorageSync('cookies')
+			uni.removeStorageSync('userinfo')
 		}
+		
 	},
 	
 	

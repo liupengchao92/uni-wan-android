@@ -21,13 +21,29 @@
 </template>
 
 <script>
+	
+	import {mapMutations} from 'vuex'
+	
 	export default {
 		data() {
 			return {
 				
 			};
 		},
+		onLoad() {
+	
+			try {
+				//获取缓存信息
+				const res = uni.getStorageInfoSync();
+				console.log(res.keys);
+				console.log(res.currentSize);
+				console.log(res.limitSize);
+			} catch (e) {
+				// error
+			}
+		},
 		methods:{
+			...mapMutations('m_user',['clearLoginInfo']),
 			//相关设置
 			clickSetting(type){
 				console.log(type)
@@ -52,13 +68,27 @@
 						content:'是否退出？',
 						success:function(res){
 							if(res.confirm){
-								console.log("确定退出。。。")
+								//调用接口
+								this.logout()
 							}
-						}
+						}.bind(this)
 					})
 					
 					break;
 				}
+			},
+			
+			async logout(){
+				
+				const {data:data} = await uni.$http.get('/user/logout/json')
+				
+				if(data.errorCode !==0) return uni.$showMsg(data.errorMsg)
+				
+				//清空用户信息
+				this.clearLoginInfo()
+				
+				uni.navigateBack()
+				
 			}
 		}
 	}
