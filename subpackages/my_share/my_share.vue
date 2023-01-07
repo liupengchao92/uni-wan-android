@@ -1,6 +1,6 @@
 <template>
 	<view>
-		我的分享
+		<empty-view tips="没有分享的文章"></empty-view>
 	</view>
 </template>
 

@@ -21,7 +21,7 @@
 				</view> 
 			 </block>
 			 <!-- 加载更多 -->
-			 <uni-load-more :status="status"></uni-load-more>
+			 <uni-load-more :status="status"  v-if="rankList.length!==0"></uni-load-more>
 		 </view>
 	</view>
 </template>
@@ -30,7 +30,7 @@
 	export default {
 		data() {
 			return {
-				//积分嘻嘻
+				//积分信息
 				coinInfo:null,
 				//积分列表
 				rankList:[],
