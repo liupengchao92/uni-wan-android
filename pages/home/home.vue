@@ -1,9 +1,7 @@
 <template>
 	<view>
-		
 		<!-- 搜索组件 -->
 		<my-search @click = "searchHandler"></my-search>
-		
 		<!-- 轮播图区域 -->
 		<swiper indicator-dots="true" autoplay="true" aucircular="true">
 			<swiper-item v-for="(item,i) in bannerList" :key="i" @click="onSiwperItemClick(item)">
@@ -12,18 +10,19 @@
 				</view>
 			</swiper-item>
 		</swiper>
-
 		<!-- 文章区域 -->
 		<view class="article-container">
 			<block v-for="(article,i) in articleList" :key="i">
 				<aritlce-item :article="article" :isShowLike="true" @click-favorite = "favorite"></aritlce-item>
 			</block>
 		</view>
-
 	</view>
 </template>
 
 <script>
+	
+	import {mapState} from 'vuex'
+	
 	export default {
 		data() {
 			return {
@@ -67,6 +66,21 @@
 			this.page++;
 			
 			this.getAritcleList()
+		},
+		computed:{
+			...mapState('m_user',['cookies'])
+		},
+		watch:{	
+			cookies(value){
+				
+				this.page = 0
+				
+				this.articleList = []
+				
+				this.getTopArticleList()
+				
+				this.getAritcleList()
+			}
 		},
 		methods: {
 
@@ -190,7 +204,6 @@
 		
 		background-color: $uni-bg-color-grey;
 		
-	
 	}
 	
 </style>
