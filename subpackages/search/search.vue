@@ -3,7 +3,7 @@
 		<!-- 搜索区域 -->
 		<view class="search-cotainer">	
 			<view class="search-box">
-				<uni-search-bar  radius="50" placeholder="请输入搜索内容" v-model="searchModel" maxlength="15" cancelButton="none" @input="inputHandler"></uni-search-bar>
+				<uni-search-bar bgColor="#fff" radius="50" placeholder="请输入搜索内容" v-model="searchModel" maxlength="15" cancelButton="none" @input="inputHandler"></uni-search-bar>
 			</view>
 		</view>
 		<!-- 搜索关键词区域 -->

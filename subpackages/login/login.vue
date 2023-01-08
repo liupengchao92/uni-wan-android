@@ -10,7 +10,7 @@
 		</view>
 		<button type="primary" class="btn-login" @click="loginHandler">登录</button>
 		<text class="tips">若无此账号，请前往官网注册。</text>
-		
+	
 	</view>
 </template>
 

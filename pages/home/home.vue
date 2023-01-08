@@ -1,7 +1,10 @@
 <template>
 	<view>
-		<!-- 搜索组件 -->
-		<my-search @click = "searchHandler"></my-search>
+		<!-- 搜索区域 -->
+		<view class="search-box">
+			<!-- 搜索组件 -->
+			<my-search @click = "searchHandler"></my-search>
+		</view>
 		<!-- 轮播图区域 -->
 		<swiper indicator-dots="true" autoplay="true" aucircular="true">
 			<swiper-item v-for="(item,i) in bannerList" :key="i" @click="onSiwperItemClick(item)">
@@ -71,6 +74,7 @@
 			...mapState('m_user',['cookies'])
 		},
 		watch:{	
+			//登录状态发生改变
 			cookies(value){
 				
 				this.page = 0
@@ -161,14 +165,11 @@
 					const {data:data} = await uni.$http.post('/lg/collect/'+item.id+'/json')
 							
 					if(data.errorCode !==0){
-						
 						if(data.errorCode===-1001){
 							//需要重新登录
-							uni.navigateTo({
-								url:'/subpackages/login/login'
-							})
+							uni.navigateTo({url:'/subpackages/login/login'})
+							return
 						}
-						
 						return uni.$showMsg(data.errorMsg)
 					}
 							
@@ -186,6 +187,13 @@
 </script>
 
 <style lang="scss">
+	
+	.search-box {
+		position: sticky;
+		top: 0;
+		z-index: 999;
+	}
+
 	swiper {
 		padding: 5px 10px;
 		height: 380rpx;
@@ -196,14 +204,13 @@
 		image {
 			width: 100%;
 			height: 100%;
-			border-radius: 10px;
+			border-radius: 5px;
 		}
 	}
 	
 	.article-container {
 		
 		background-color: $uni-bg-color-grey;
-		
 	}
 	
 </style>

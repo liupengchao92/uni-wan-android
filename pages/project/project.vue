@@ -135,7 +135,7 @@
 		z-index: 999;
 		top: 0;
 		background-color: #007aff;
-		height: 45px;
+		height: 50px;
 		width: 100%;
 		white-space: nowrap;
 		
@@ -144,11 +144,11 @@
 			height: 100%;
 			margin: 0 6px;
 			display: inline-flex;
-			font-size: 13px;
-			color: lightgray;
+			font-size: 14px;
+			color: floralwhite;
 				
 			&.select {
-				font-size: 14px;
+				font-size: 15px;
 				color: white;
 				position: relative;
 				
@@ -159,7 +159,7 @@
 					height: 3px;
 					background-color: white;
 					position: absolute;
-					bottom: 2px;
+					bottom: 4px;
 					left: 0;
 					border-radius: 5px;
 				}
@@ -174,13 +174,16 @@
 		display: flex;
 		justify-content: flex-start;
 		padding: 5px 8px;
-		border-bottom: 1px solid #efefef;
+		border: 1px solid #efefef;
+		margin: 5px 10px;
+		border-radius: 5px;
+		box-shadow:1px 1px 5px 0px #efefef;
 
 		.item-left-pic {
 			margin-right: 10px;
 			.pic {
 				width: 80px;
-				height: 115px;
+				height: 120px;
 			}
 		}
 		
@@ -190,7 +193,7 @@
 			justify-content: space-between;
 			.top-info {
 				.project-title {
-					font-size: 13px;
+					font-size: 14px;
 					overflow: hidden;
 					color: $uni-color-title;
 					-webkit-line-clamp: 2;

@@ -3,7 +3,7 @@
 	<view class="info-container">
 		<!-- 基本信息 -->
 		<view class="base-info">
-			<image class="usericon" src="../../static/my_icon.jpg"></image>
+			<image class="usericon" src="../../static/head_man.png"></image>
 			<text class="username">{{userinfo.username}}</text>
 		</view>
 		<!-- 其它信息 -->
