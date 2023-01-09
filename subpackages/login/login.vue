@@ -10,6 +10,9 @@
 		</view>
 		<button type="primary" class="btn-login" @click="loginHandler">登录</button>
 		<text class="tips">若无此账号，请前往官网注册。</text>
+		<view class="website">
+			<uni-link href="https://www.wanandroid.com/" color="#007BFF" text="官网:https://www.wanandroid.com/"></uni-link>
+		</view>
 	
 	</view>
 </template>
@@ -125,15 +128,19 @@ page ,.login-container {
 		
 	.btn-login {
 		margin-top: 10px;
-		margin-bottom: 100px;
 		background-color: #007aff;
 		border-radius: 8px;
 		width: 90%;
 	}
 	
 	.tips {
-		font-size: 11px;
+		margin-top: 30px;
+		font-size: 13px;
 		color: $uni-color-subtitle;
+	}
+	
+	.website {
+		margin-top: 15px;
 	}
 }
 </style>

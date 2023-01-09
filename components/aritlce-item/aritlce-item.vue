@@ -56,7 +56,7 @@
 			getAuthorDate(item){
 				let author = item.author || item.shareUser 
 				let date = item.niceDate || item.niceShareDate
-				return author + "   "+date
+				return "作者:"+ author +'\xa0\xa0\xa0'+ date
 			},
 			
 			//点击文章跳转
@@ -82,13 +82,13 @@
 		justify-content: space-between;
 		align-items: center;
 		border-radius: 5px;
-		padding: 15rpx 20rpx;
+		padding: 20rpx;
 		
 		.article-info {
 			
 			.article-info-top {
 				display: flex;
-				align-items:flex-start;
+				align-items:center;
 				.fresh {
 					padding: 0 2px;
 					font-size: 11px;
@@ -97,8 +97,8 @@
 					margin-right: 5px;
 				}
 				.article-title {
-					font-size: 14px;
-					color: $uni-text-color;
+					font-size: 15px;
+					color: #333333;
 				}
 			}
 			
@@ -115,7 +115,7 @@
 				}
 				.author-date {
 					font-size: 12px;
-					color: $uni-color-subtitle;
+					color: #999999;
 				}
 			}
 			

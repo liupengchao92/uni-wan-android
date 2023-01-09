@@ -6,13 +6,15 @@
 			<my-search @click = "searchHandler"></my-search>
 		</view>
 		<!-- 轮播图区域 -->
-		<swiper indicator-dots="true" autoplay="true" aucircular="true">
-			<swiper-item v-for="(item,i) in bannerList" :key="i" @click="onSiwperItemClick(item)">
-				<view class="banner-item">
-					<image class="img" :src="item.imagePath"></image>
-				</view>
-			</swiper-item>
-		</swiper>
+		<uni-swiper-dot :info="bannerList" :current="current"  mode:='round'>
+			<swiper  autoplay="true" aucircular="true" @change="change">
+				<swiper-item v-for="(item,i) in bannerList" :key="i" @click="onSiwperItemClick(item)">
+					<view class="banner-item">
+						<image class="img" :src="item.imagePath"></image>
+					</view>
+				</swiper-item>
+			</swiper>
+		</uni-swiper-dot>
 		<!-- 文章区域 -->
 		<view class="article-container">
 			<block v-for="(article,i) in articleList" :key="i">
@@ -36,7 +38,9 @@
 				//请求页码,从0开始。
 				page: 0,
 				//节流阀
-				isLoading :false
+				isLoading :false,
+				//轮播的位置
+				current:0
 			};
 		},
 		mounted() {
@@ -182,6 +186,11 @@
 					uni.showToast({title:'收藏成功',duration:1500,icon:'success'})		
 				}		
 			},
+			//轮播图监听
+			change(e) {
+				
+				this.current = e.detail.current;
+			}
 		}
 	}
 </script>

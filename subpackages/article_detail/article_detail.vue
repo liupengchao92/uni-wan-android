@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<view>个人类型的</view>
 		<!-- webview -->
 		<web-view :src="url" :webview-styles="webviewStyles" fullscreen="true"></web-view>
 	</view>

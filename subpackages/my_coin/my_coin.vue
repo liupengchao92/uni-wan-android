@@ -137,7 +137,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		border-bottom: 1px solid #efefef;
+		border-bottom: 1rpx solid #efefef;
 		
 		.rank {
 			width: 20px;
